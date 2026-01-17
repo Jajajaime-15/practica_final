@@ -1,0 +1,29 @@
+{
+  "name": "practica_final",
+  "version": "1.0.0",
+  "description": "alba_julio_jaime",
+  "homepage": "https://github.com/Jajajaime-15/practica_final#readme",
+  "bugs": {
+    "url": "https://github.com/Jajajaime-15/practica_final/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jajajaime-15/practica_final.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "author": "alba_julio_jaime",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs",
+    "dev": "node --watch index.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.90.1",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "redis": "^5.10.0"
+  }
+}
