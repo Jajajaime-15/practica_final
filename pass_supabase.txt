@@ -1,8 +1,0 @@
-V3nTPdfFRYOYrV08
-
-DATABASE= postgres
-HOST= aws-1-eu-west-1.pooler.supabase.com
-NAME= postgres
-USER= postgres.zxtnjnntgdoezaorzbwn
-PASSWORD= V3nTPdfFRYOYrV08
-PORT= 5432
