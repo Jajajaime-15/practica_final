@@ -28,6 +28,7 @@ export class Autor {
    */
     toPublic() {
         return {
+            id: this.id,
             nombre_completo: this.nombre_completo,
             created_at: this.created_at
         };

@@ -32,6 +32,7 @@ export class Libro {
    */
   toPublic() {
     return {
+      id: this.id,
       titulo: this.titulo,
       autor_id: this.autor_id,
       stock: this.stock,

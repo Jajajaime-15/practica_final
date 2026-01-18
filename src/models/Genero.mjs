@@ -26,6 +26,7 @@ export class Genero {
    */
     toPublic() {
     return {
+        id: this.id,
         nombre: this.nombre,
         created_at: this.created_at
     };

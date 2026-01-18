@@ -34,6 +34,7 @@ export class Prestamo {
      */
     toPublic() {
         return {
+            id: this.id,
             libro_id: this.libro_id,
             fecha_prestamo: this.fecha_prestamo,
             estado: this.estado,
