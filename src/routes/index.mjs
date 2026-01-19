@@ -1,5 +1,9 @@
 import express from 'express';
 import apiKeyRoutes from './apiKeyRoutes.mjs';
+import autorRoutes from './autorRoutes.mjs';
+import libroRoutes from './libroRoutes.mjs';
+import prestamoRoutes from './prestamoRoutes.mjs';
+import usuarioRoutes from './usuarioRoutes.mjs';
 
 const router = express.Router();
 
