@@ -5,5 +5,7 @@ const router = express.Router();
 const controller = new LibroController();
 
 
+router.post('/', controller.crear)
+
 
 export default router;

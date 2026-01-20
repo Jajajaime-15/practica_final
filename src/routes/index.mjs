@@ -7,6 +7,11 @@ import usuarioRoutes from './usuarioRoutes.mjs';
 
 const router = express.Router();
 
+router.use('/libros', libroRoutes);
+router.use('/autores', autorRoutes);
+router.use('/prestamos', prestamoRoutes);
+router.use('/usuarios', usuarioRoutes);
+
 // Montar las rutas de API Keys
 router.use('/', apiKeyRoutes);
 
@@ -27,7 +32,19 @@ router.get('/', (req, res) => {
         'GET /api/admin/keys - Listar todas las API Keys',
         'PUT /api/admin/keys/:apiKey/deactivate - Desactivar API Key',
         'PUT /api/admin/keys/:apiKey/activate - Activar API Key'
-      ]
+      ],
+      libros: [
+
+      ],
+      autores: [
+
+      ],
+      usuarios: [
+
+      ],
+      prestamos: [
+
+      ],
     },
     usage: {
       header: 'X-API-Key',
