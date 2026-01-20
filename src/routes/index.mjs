@@ -11,6 +11,7 @@ router.use('/libros', libroRoutes);
 router.use('/autores', autorRoutes);
 router.use('/prestamos', prestamoRoutes);
 router.use('/usuarios', usuarioRoutes);
+router.use('/estadisticas', estadisticasRoutes);
 
 // Montar las rutas de API Keys
 router.use('/', apiKeyRoutes);
