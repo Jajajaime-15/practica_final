@@ -6,13 +6,13 @@ import { adminMiddleware } from '../middlewares/adminMiddleware.mjs';
 const router = express.Router();
 const controller = new AutorController();
 
-router.post('/', apiKeyMiddleware, controller.crear)
+router.post('/', adminMiddleware, controller.crear)
 
 router.get('/', controller.listar)
 
-router.get('/:id', controller.obtener)
+router.get('/:id', apiKeyMiddleware, controller.obtener)
 
-router.put('/:id', apiKeyMiddleware, controller.actualizar)
+router.put('/:id', adminMiddleware, controller.actualizar)
 
 router.delete('/:id', adminMiddleware, controller.eliminar)
 
