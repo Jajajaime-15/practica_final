@@ -6,7 +6,7 @@ import { adminMiddleware } from '../middlewares/adminMiddleware.mjs';
 const router = express.Router();
 const controller = new EstadisticasController();
 
-router.get('/', controller) // primera consulta avanzada
+router.get('/top_autores', controller.topAutores) // primera consulta avanzada
 
 router.get('/', controller) // segunda consulta avanzada
 

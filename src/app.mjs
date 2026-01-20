@@ -57,7 +57,7 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`\n Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`\n Para obtener los endpoints disponibles:`);
+  console.log(`\n Para mostrar los endpoints disponibles:`);
   console.log(`   curl http://localhost:${PORT}/api \\`);
 });
 
