@@ -6,9 +6,9 @@ export class LibroController{
         this.service = libroService;
     }
 
-    obtenerLibros = async (req, res) => {
+    listar = async (req, res) => {
     try {
-      const libros = await this.service.obtenerLibros();
+      const libros = await this.service.listar();
       
       res.status(200).json({
         success: true,
@@ -24,11 +24,11 @@ export class LibroController{
     }
   };
 
-  obtenerLibroPorId = async (req, res) => {
+  obtener = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
-      const libro = await this.service.obtenerLibroPorId(id);
+      const libro = await this.service.obtener(id);
       
       if (!libro) {
         return res.status(404).json({
@@ -50,7 +50,7 @@ export class LibroController{
     }
   };
 
-  crearLibro = async (req, res) => {
+  crear = async (req, res) => {
     try {
       const { titulo, autor_id, stock } = req.body;
       
@@ -69,7 +69,7 @@ export class LibroController{
         });
       }
       
-      const nuevoLibro = await this.service.crearLibro({
+      const nuevoLibro = await this.service.crear({
         titulo,
         autor_id,
         stock: stock || 1
@@ -89,12 +89,12 @@ export class LibroController{
     }
   };
 
-  actualizarLibro = async (req, res) => {
+  actualizar = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { titulo, autor_id, stock } = req.body;
       
-      const libroActualizado = await this.service.actualizarLibro(id, {
+      const libroActualizado = await this.service.actualizar(id, {
         titulo,
         autor_id,
         stock
@@ -121,11 +121,11 @@ export class LibroController{
     }
   };
 
-  eliminarLibro = async (req, res) => {
+  eliminar= async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
-      const resultado = await this.service.eliminarLibro(id);
+      const resultado = await this.service.eliminar(id);
       
       if (!resultado) {
         return res.status(404).json({
@@ -144,45 +144,6 @@ export class LibroController{
       res.status(500).json({ 
         success: false,
         error: 'Error al eliminar libro'
-      });
-    }
-  };
-
-obtenerLibrosPorAutor = async (req, res) => {
-    try {
-      const autor_id = parseInt(req.params.autor_id);
-      
-      const libros = await this.service.obtenerLibrosPorAutor(autor_id);
-      
-      res.status(200).json({
-        success: true,
-        autor_id: autor_id,
-        count: libros.length,
-        data: libros
-      });
-    } catch (error) {
-      console.error('Error al obtener libros por autor:', error);
-      res.status(500).json({ 
-        success: false,
-        error: 'Error al obtener libros'
-      });
-    }
-  };
-
-  obtenerLibrosDisponibles = async (req, res) => {
-    try {
-      const libros = await this.service.obtenerLibrosDisponibles();
-      
-      res.status(200).json({
-        success: true,
-        count: libros.length,
-        data: libros
-      });
-    } catch (error) {
-      console.error('Error al obtener libros disponibles:', error);
-      res.status(500).json({ 
-        success: false,
-        error: 'Error al obtener libros disponibles'
       });
     }
   };

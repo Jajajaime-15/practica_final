@@ -6,9 +6,9 @@ export class AutorController{
         this.service = new AutorService();
     }
 
-    obtenerAutores = async (req, res) => {
+    listar = async (req, res) => {
     try {
-      const autores = await this.service.obtenerAutores();
+      const autores = await this.service.listar();
       
       res.status(200).json({
         success: true,
@@ -24,7 +24,7 @@ export class AutorController{
     }
   };
 
-  obtenerAutorId = async (req, res) => {
+  obtener = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
@@ -35,7 +35,7 @@ export class AutorController{
         });
       }
       
-      const autor = await this.service.obtenerAutorId(id);
+      const autor = await this.service.obtener(id);
       
       if (!autor) {
         return res.status(404).json({
@@ -57,7 +57,7 @@ export class AutorController{
     }
   };
 
-  crearAutor = async (req, res) => {
+  crear = async (req, res) => {
     try {
       const { nombre_completo } = req.body;
       
@@ -69,7 +69,7 @@ export class AutorController{
         });
       }
       
-      const nuevoAutor = await this.service.crearAutor(nombre_completo.trim());
+      const nuevoAutor = await this.service.crear(nombre_completo.trim());
       
       res.status(201).json({
         success: true,
@@ -94,7 +94,7 @@ export class AutorController{
     }
   };
 
-  actualizarAutor = async (req, res) => {
+  actualizar = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { nombre_completo } = req.body;
@@ -113,7 +113,7 @@ export class AutorController{
         });
       }
       
-      const autorActualizado = await this.service.actualizarAutor(id, nombre_completo.trim());
+      const autorActualizado = await this.service.actualizar(id, nombre_completo.trim());
       
       if (!autorActualizado) {
         return res.status(404).json({
@@ -136,7 +136,7 @@ export class AutorController{
     }
   };
 
-  borrarAutor = async (req, res) => {
+  borrar = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
@@ -147,7 +147,7 @@ export class AutorController{
         });
       }
       
-      const resultado = await this.service.borrarAutor(id);
+      const resultado = await this.service.borrar(id);
       
       if (!resultado) {
         return res.status(404).json({
