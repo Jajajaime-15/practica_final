@@ -30,7 +30,8 @@ export class GeneroController {
 
     obtener = async (req, res) => {
         try{
-            const genero = await this.service.obtener()
+            const id = req.body
+            const genero = await this.service.obtener(id)
 
             res.json({
                 genero : genero 

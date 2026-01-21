@@ -17,8 +17,14 @@ export class GeneroRepository{
 
     }
 
-    async obtener(){
+    async obtener(id){
+        const { data, error } = await supabase
+        .from('generos')
+        .select('*')
+        .eq('id', id)
 
+        if (error) throw error
+        return data ? new Genero(data) : null
     }
 
     async eliminar(){

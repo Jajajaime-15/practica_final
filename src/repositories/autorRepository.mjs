@@ -1,19 +1,18 @@
-import { param } from 'express/lib/application';
 import { supabase } from '../config/database.mjs';
 import { Autor } from '../models/Autor.mjs';
 
 export class AutorRepository{
 
     // CREAR AUTOR EN BBDD
-    async crear (data){
+    async crear (autorData){
         const {data, error} = await supabase //peticion 'insert' a supabase
             .from ('autores')
-            .insert([data])
+            .insert([autorData])
             .select()
             .single();
 
         if (error) throw error;
-        return new Autor(data); //convertimos los datos en un objeto Autor y lo devolvemos
+        return new Autor(autorData); //convertimos los datos en un objeto Autor y lo devolvemos
     }
 
     // BUSCAR-MOSTRAR UN AUTOR POR ID

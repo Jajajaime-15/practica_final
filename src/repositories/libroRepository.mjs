@@ -4,15 +4,15 @@ import { Libro } from '../models/Libro.mjs';
 export class LibroRepository{
 
     // CREAR LIBRO EN BBDD
-    async crear (data){
+    async crear (libroData){
         const {data, error} = await supabase //peticion 'insert' a supabase
             .from ('libros')
-            .insert([data])
+            .insert([libroData])
             .select()
             .single();
 
         if (error) throw error;
-        return new Libro(data); //convertimos los datos en un objeto Libro y lo devolvemos
+        return new Libro(libroData); //convertimos los datos en un objeto Libro y lo devolvemos
     }
 
     // BUSCAR-MOSTRAR UN LIBRO POR ID

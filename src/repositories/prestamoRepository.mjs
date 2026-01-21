@@ -4,15 +4,15 @@ import { Prestamo } from '../models/Prestamo.mjs';
 export class PrestamoRepository{
     
     // CREAR PRESTAMO EN BBDD
-    async crear (data){
+    async crear (prestamoData){
         const {data, error} = await supabase //peticion 'insert' a supabase
             .from ('prestamos')
-            .insert([data])
+            .insert([prestamoData])
             .select()
             .single();
 
         if (error) throw error;
-        return new Prestamo(data); //convertimos los datos en un objeto Prestamo y lo devolvemos
+        return new Prestamo(prestamoData); //convertimos los datos en un objeto Prestamo y lo devolvemos
     }
 
     // BUSCAR-MOSTRAR UN PRESTAMO POR ID

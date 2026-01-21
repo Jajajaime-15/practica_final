@@ -13,8 +13,8 @@ export class GeneroService {
         return this.repository.listar()
     }
 
-    async obtener(){
-        return this.repository.obtener()
+    async obtener(id){
+        return this.repository.obtener(id)
     }
     
     async eliminar(){
