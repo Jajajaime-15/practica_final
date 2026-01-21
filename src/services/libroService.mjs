@@ -25,11 +25,12 @@ export class LibroService{
         if(!existeAutor){
             throw new Error ('No hay ningun autor con el id ', autor_id, ' en la base de datos')
         }
-        //comprobamos que el stock no es negativo ----- PENDIENTE
-        
-        
+        //comprobamos que el stock no es negativo
+        if(nuevoStock < 0){
+            throw new Error ('El stock no puede estar en negativo')
+        }        
 
-        //CREAR (pdt. porque el stock aun no se comprueba)
+        //CREAR 
         const libro = await this.repository.crear({
             titulo: titulo.trim(),
             autor_id: autor_id,
@@ -60,6 +61,28 @@ export class LibroService{
     // BUSCAR-MOSTRAR TODOS LOS LIBROS
     async mostrarLibros(){
         return await this.repository.buscarTodos();
+    }
+
+    //ACTUALIZAR STOCK
+    async actualizarStock(id,nuevoStock){
+
+        // VALIDACIONES
+        //comprobar que el id es un numero valido
+        if(!id || isNaN(id)){
+            throw new Error ('El id del libro no es valido')
+        }
+        //comprobar que el stock no es negativo
+        if(nuevoStock<0){
+            throw new Error ('El stock no puede estar en negativo')
+        }
+        //buscamos que existe el libro con el id indicado
+        const libro = await this.repository.buscarPorId(id);
+        if(!libro){
+            throw new Error ('No se ha encontrado el libro con el id: ',id);
+        }
+
+        //ACTUALIZAR
+        return await this.repository.actualizarStock(id, {stock:nuevoStock});
     }
 
     // ELIMINAR LIBRO POR ID
