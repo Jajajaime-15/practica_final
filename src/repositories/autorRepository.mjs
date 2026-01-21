@@ -1,7 +1,73 @@
 import { supabase } from '../config/database.mjs';
 import { Autor } from '../models/Autor.mjs';
+import redis from '../config/redis.mjs';
 
 export class AutorRepository{
+
+    constructor() {
+    
+    this.r = redis;
+    this.TTL = 60; // Tiempo de caché en segundos
+  }
+    async obtenerAutores() {
+    const key = 'autores:lista';
+    
+    let autoresCache = null;
+    try {
+      if (this.r) {
+        autoresCache = await this.r.get(key);
+        if (autoresCache) {
+          await this.r.expire(key, this.TTL); // Renovar TTL
+        }
+      }
+    } catch (error) {
+      console.log('Error al acceder a la cache:', error.message);
+    }
+    
+    if (autoresCache) {
+      console.log('Autores encontrados en la cache');
+      return JSON.parse(autoresCache).map(item => new Autor(item));
+    }
+    
+    // Si no está en cache asi que buscamos en la base de datos
+    console.log('Autores no encnontrados en cache, consultando base de datos');
+    
+    try {
+      const { data, error } = await supabase
+        .from('autores')
+        .select('*')
+        .order('nombre_completo', { ascending: true });
+      
+      if (error) {
+        console.error('Error consultando en la base de datos:', error.message);
+        throw new Error(`Error al obtener autores: ${error.message}`);
+      }
+      
+      if (!data || data.length === 0) {
+        console.log(' No hay autores en la base de datos');
+        return [];
+      }
+      
+      console.log(`${data.length} autores obtenidos de la base de datos`);
+      
+      // Guardamos los datos en cache para proximas consultas
+      try {
+        if (this.r) {
+          await this.r.setex(key, this.TTL, JSON.stringify(data));
+          console.log(' Autores guardados en caché');
+        }
+      } catch (error) {
+        console.log('Error guardando en cache:', error.message);
+      }
+      
+      // Convertir a objetos Libro
+      return data.map(item => new Autor(item));
+      
+    } catch (error) {
+      console.error('Error al obtener autores', error);
+      throw error;
+    }
+  }
 
     // CREAR AUTOR EN BBDD
     async crear (autorData){
