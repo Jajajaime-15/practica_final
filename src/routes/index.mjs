@@ -4,6 +4,7 @@ import autorRoutes from './autorRoutes.mjs';
 import libroRoutes from './libroRoutes.mjs';
 import prestamoRoutes from './prestamoRoutes.mjs';
 import usuarioRoutes from './usuarioRoutes.mjs';
+import generoRoutes from './generoRoutes.mjs';
 
 const router = express.Router();
 
@@ -11,6 +12,7 @@ router.use('/libros', libroRoutes);
 router.use('/autores', autorRoutes);
 router.use('/prestamos', prestamoRoutes);
 router.use('/usuarios', usuarioRoutes);
+router.use('/generos', generoRoutes);
 router.use('/estadisticas', estadisticasRoutes);
 
 // Montar las rutas de API Keys
@@ -61,6 +63,16 @@ router.get('/', (req, res) => {
         'GET /api/prestamos/:id - Obtener un prestamo concreto de la base de datos mediante su id (requiere ser admin)',
         'PUT /api/prestamos/:id - Actualizar un prestamo en la base de datos (requiere ser admin)',
         'DELETE /api/prestamos/:id - Eliminar un prestamo de la base de datos (requiere ser admin)'
+      ],
+      generos: [
+        'POST /api/generos - Crear un nuevo genero (requiere ser admin)',
+        'GET /api/generos - Obtener una lista completa de todos los generos de la base de datos',
+        'GET /api/generos/:id - Obtener un genero concreto de la base de datos mediante su id (requiere API Key)',
+        'DELETE /api/generos/:id - Eliminar un genero de la base de datos (requiere ser admin)'
+      ],
+      estadisticas: [
+        'GET /api/estadisticas/ - Primera consulta avanzada - (requiere API Key)',
+        'GET /api/estadisticas - Segunda consulta avanzada - (requiere API Key)',
       ]
     },
     usage: {
