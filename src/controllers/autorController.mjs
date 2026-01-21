@@ -1,6 +1,11 @@
 import { AutorService } from '../services/autorService.mjs';
 
 export class AutorController{
+
+    constructor() {
+        this.service = new AutorService();
+    }
+
     obtenerAutores = async (req, res) => {
     try {
       const autores = await this.service.obtenerAutores();
