@@ -7,6 +7,14 @@ export class GeneroController {
 
     crear = async (req, res) => {
         try{
+            const nombre = req.body
+            const genero = this.service.crear(nombre)
+
+            res.status(201).json({
+                message: 'Genero creado exitosamente',
+                id : genero.id,
+                nombre : genero.nombre
+            })
 
         }catch(error){
             console.error("Error al crear un genero: ", error)

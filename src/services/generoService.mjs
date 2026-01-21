@@ -5,7 +5,11 @@ export class GeneroService {
         this.repository = new GeneroRepository()
     }
 
-    async crear(){
+    async crear(nombre){
+        if (!nombre){
+            throw new Error('Se requiere nombre del genero')
+        }
+        
         
     }
 
