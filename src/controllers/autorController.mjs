@@ -136,7 +136,7 @@ export class AutorController{
     }
   };
 
-  borrar = async (req, res) => {
+  eliminar = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       

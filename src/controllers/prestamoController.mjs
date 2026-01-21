@@ -219,4 +219,49 @@ export class PrestamoController{
     }
   };
 
+  actualizar = async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { estado } = req.body;
+      
+      
+      if (!estado) {
+        return res.status(400).json({
+          success: false,
+          error: 'El estado es requerido'
+        });
+      }
+      
+      // Validar que el estado sea correcto
+      if (estado !== 'ACTIVO' && estado !== 'DEVUELTO') {
+        return res.status(400).json({
+          success: false,
+          error: 'El estado debe ser "ACTIVO" o "DEVUELTO"'
+        });
+      }
+      
+      const prestamoActualizado = await this.service.actualizar(id, {
+        estado
+      });
+      
+      if (!prestamoActualizado) {
+        return res.status(404).json({
+          success: false,
+          error: `Préstamo con ID ${id} no encontrado`
+        });
+      }
+      
+      res.status(200).json({
+        success: true,
+        message: 'Préstamo actualizado exitosamente',
+        data: prestamoActualizado
+      });
+    } catch (error) {
+      console.error('Error al actualizar préstamo:', error);
+      res.status(400).json({ 
+        success: false,
+        error: error.message || 'Error al actualizar préstamo'
+      });
+    }
+  };
 }

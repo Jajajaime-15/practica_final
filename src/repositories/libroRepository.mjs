@@ -1,7 +1,76 @@
 import { supabase } from '../config/database.mjs';
 import { Libro } from '../models/Libro.mjs';
+import redis from '../config/redis.mjs';
+
 
 export class LibroRepository{
+
+
+    constructor() {
+    
+    this.r = redis;
+    this.TTL = 60; // Tiempo de caché en segundos
+  }
+    async obtenerLibros() {
+    const key = 'libros:lista';
+    
+    let librosCache = null;
+    try {
+      if (this.r) {
+        librosCache = await this.r.get(key);
+        if (librosCache) {
+          await this.r.expire(key, this.TTL); // Renovar TTL
+        }
+      }
+    } catch (error) {
+      console.log('Error al acceder a la cache:', error.message);
+    }
+    
+    if (librosCache) {
+      console.log('Libros encontrados en la cache');
+      return JSON.parse(librosCache).map(item => new Libro(item));
+    }
+    
+    // Si no está en cache asi que buscamos en la base de datos
+    console.log('Libros no encnontrados en cache, consultando base de datos');
+    
+    try {
+      const { data, error } = await supabase
+        .from('libros')
+        .select('*')
+        .order('titulo', { ascending: true });
+      
+      if (error) {
+        console.error('Error consultando en la base de datos:', error.message);
+        throw new Error(`Error al obtener libros: ${error.message}`);
+      }
+      
+      if (!data || data.length === 0) {
+        console.log(' No hay libros en la base de datos');
+        return [];
+      }
+      
+      console.log(`${data.length} libros obtenidos de la base de datos`);
+      
+      // Guardamos los datos en cache para proximas consultas
+      try {
+        if (this.r) {
+          await this.r.setex(key, TTL, JSON.stringify(data));
+          console.log(' Libros guardados en caché');
+        }
+      } catch (error) {
+        console.log('Error guardando en cache:', error.message);
+      }
+      
+      // Convertir a objetos Libro
+      return data.map(item => new Libro(item));
+      
+    } catch (error) {
+      console.error('Error al obtener libros', error);
+      throw error;
+    }
+  }
+
 
     // CREAR LIBRO EN BBDD
     async crear (libroData){
@@ -61,4 +130,6 @@ export class LibroRepository{
         if (error) throw error;
         return true;
     }
+
+    
 }
