@@ -12,7 +12,7 @@ export class PrestamoRepository{
             .single();
 
         if (error) throw error;
-        return new Prestamo(prestamoData); //convertimos los datos en un objeto Prestamo y lo devolvemos
+        return new Prestamo(data); //convertimos los datos en un objeto Prestamo y lo devolvemos
     }
 
     // BUSCAR-MOSTRAR UN PRESTAMO POR ID

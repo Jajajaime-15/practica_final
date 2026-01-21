@@ -12,7 +12,7 @@ export class UsuarioRepository{
             .single();
 
         if (error) throw error;
-        return new Usuario(usuarioData); //convertimos los datos en un objeto Usuario y lo devolvemos
+        return new Usuario(data); //convertimos los datos en un objeto Usuario y lo devolvemos
     }
 
     // BUSCAR-MOSTRAR UN USUARIO POR ID

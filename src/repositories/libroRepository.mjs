@@ -12,7 +12,7 @@ export class LibroRepository{
             .single();
 
         if (error) throw error;
-        return new Libro(libroData); //convertimos los datos en un objeto Libro y lo devolvemos
+        return new Libro(data); //convertimos los datos en un objeto Libro y lo devolvemos
     }
 
     // BUSCAR-MOSTRAR UN LIBRO POR ID

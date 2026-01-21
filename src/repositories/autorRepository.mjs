@@ -12,7 +12,7 @@ export class AutorRepository{
             .single();
 
         if (error) throw error;
-        return new Autor(autorData); //convertimos los datos en un objeto Autor y lo devolvemos
+        return new Autor(data); //convertimos los datos en un objeto Autor y lo devolvemos
     }
 
     // BUSCAR-MOSTRAR UN AUTOR POR ID
