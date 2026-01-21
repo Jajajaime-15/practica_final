@@ -23,12 +23,12 @@ export class PrestamoService{
             throw new Error ('El ide del usuario es obligatorio')
         }
         //comprobar que el libro existe
-        const libro = await this.LibroRepository.buscarPorId(libro_id);
+        const libro = await this.libroRepository.buscarPorId(libro_id);
         if(!libro){
             throw new Error ('El libro no existe')
         }
         //comprobar que el usuario existe
-        const usuario = await this.UsuarioRepository.buscarPorId(usuario_id);
+        const usuario = await this.usuarioRepository.buscarPorId(usuario_id);
         if(!usuario){
             throw new Error ('El usuario no existe')
         }
@@ -106,7 +106,7 @@ export class PrestamoService{
     }
 
     // ELIMINAR PRESTAMO POR ID
-    async eliminarUsuario(id){
+    async eliminarPrestamo(id){
 
         // VALIDACIONES
         //comprobar que el id es un numero valido

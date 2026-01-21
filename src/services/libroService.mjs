@@ -26,7 +26,7 @@ export class LibroService{
             throw new Error ('No hay ningun autor con el id ', autor_id, ' en la base de datos')
         }
         //comprobamos que el stock no es negativo
-        if(nuevoStock < 0){
+        if(stock < 0){
             throw new Error ('El stock no puede estar en negativo')
         }        
 
@@ -37,7 +37,7 @@ export class LibroService{
             stock: stock
         });
 
-        return autor;
+        return libro;
     }
 
     // BUSCAR-MOSTRAR UN LIBRO POR ID
@@ -55,7 +55,7 @@ export class LibroService{
             throw new Error ('No se ha encontrado el libro con el id: ',id);
         }
 
-        return autor;
+        return libro;
     }
 
     // BUSCAR-MOSTRAR TODOS LOS LIBROS
@@ -81,8 +81,8 @@ export class LibroService{
             throw new Error ('No se ha encontrado el libro con el id: ',id);
         }
 
-        //ACTUALIZAR
-        return await this.repository.actualizarStock(id, {stock:nuevoStock});
+        //ACTUALIZAR --- REVISAR
+        return await this.repository.actualizarStock(id, nuevoStock);
     }
 
     // ELIMINAR LIBRO POR ID
