@@ -102,7 +102,7 @@ export class PrestamoService{
             await this.libroRepository.actualizarStock(prestamo.libro_id, libro.stock + 1);
         }
 
-        return await this.repository.actualizar(id, { estado: nuevoEstado });
+        return await this.repository.actualizarEstado(id, { nuevoEstado });
     }
 
     // ELIMINAR PRESTAMO POR ID
