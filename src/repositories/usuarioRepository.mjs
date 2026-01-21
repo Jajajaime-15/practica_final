@@ -39,10 +39,10 @@ export class UsuarioRepository{
     }
 
     // ACTUALIZAR DATOS DE UN USUARIO
-    async actualizarEmail(id,cambios){
+    async actualizarEmail(id,nuevoEmail){
         const {data,error} = await supabase //peticion 'update' a supabase
             .from('usuarios')
-            .update(cam) //actualizamos los datos
+            .update({email:nuevoEmail}) //indicamos el campo que actualizamos
             .eq('id',id)
             .single();
         

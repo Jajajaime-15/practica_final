@@ -39,7 +39,17 @@ export class LibroRepository{
     }
 
     // ACTUALIZAR STOCK DE UN LIBRO
-
+    async actualizarStock(id,nuevoStock){
+        const {data,error} = await supabase //peticion 'update' a supabase
+            .from('libros')
+            .update({stock:nuevoStock}) //indicamos el campo que actualizamos
+            .eq('id',id)
+            .select()
+            .single();
+        
+        if (error) throw error;
+        return new Libro(data);
+    }
 
     // ELIMINAR UN LIBRO POR ID DE LA BBDD
     async eliminar(id) {
