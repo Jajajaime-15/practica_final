@@ -35,9 +35,8 @@ export class AutorService{
             throw new Error ('El id del autor no es valido')
         }
 
-        // BUSCAR
+        //BUSCAR - MOSTRAR
         const autor = await this.repository.buscarPorId(id);
-
         if(!autor){
             throw new Error ('No se ha encontrado el autor con el id: ',id);
         }
