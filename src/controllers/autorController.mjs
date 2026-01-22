@@ -1,140 +1,64 @@
 import { AutorService } from '../services/autorService.mjs';
 
 export class AutorController{
+  
+  constructor() {
+    this.service = new AutorService();
+  }
 
-    constructor() {
-        this.service = new AutorService();
+  crear = async (req, res) => {
+    try {
+      const { nombre_completo } = req.body;
+      const autor = await this.service.crearAutor(nombre_completo.trim());
+
+      res.status(201).json({
+        message: 'Autor creado exitosamente',
+        id: autor.id,
+        nombre_completo: autor.nombre_completo
+      });
+    
+    } catch (error) {
+      console.error('Error al crear autor:', error);
+      res.status(400).json({error: 'Error al crear un autor'});
     }
-
-    listar = async (req, res) => {
+  };
+  
+  listar = async (req, res) => {
     try {
       const autores = await this.service.mostrarAutores();
-      
-      res.status(200).json({
-        success: true,
-        count: autores.length,
-        data: autores
+
+      res.json({
+        total: autores.length,
+        autores: autores.map(a => a.toPublic())
       });
+      
     } catch (error) {
       console.error('Error al obtener autores:', error);
-      res.status(500).json({ 
-        success: false,
-        error: 'Error al obtener autores'
-      });
+      res.status(500).json({error: 'Error al obtener autores'});
     }
   };
 
   obtener = async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      
-      if (isNaN(id)) {
-        return res.status(400).json({
-          success: false,
-          error: 'ID debe ser un número válido'
-        });
-      }
-      
+      const {id} = req.params;
       const autor = await this.service.buscarAutor(id);
-      
-      if (!autor) {
-        return res.status(404).json({
-          success: false,
-          error: `Autor con ID ${id} no encontrado`
-        });
-      }
-      
-      res.status(200).json({
-        success: true,
-        data: autor
-      });
-    } catch (error) {
-      console.error('Error al obtener autor:', error);
-      res.status(500).json({ 
-        success: false,
-        error: 'Error al obtener autor'
-      });
-    }
-  };
 
-  crear = async (req, res) => {
-    try {
-      const { nombre_completo } = req.body;
-      
-      // Validación básica
-      if (!nombre_completo || nombre_completo.trim() === '') {
-        return res.status(400).json({
-          success: false,
-          error: 'El nombre del autor no puede estar vacio'
-        });
-      }
-      
-      const nuevoAutor = await this.service.crearAutor(nombre_completo.trim());
-      
-      res.status(201).json({
-        success: true,
-        message: 'Autor creado exitosamente',
-        data: nuevoAutor
-      });
+      res.json(autor.toPublic());
     } catch (error) {
-      console.error('Error al crear autor:', error);
-      
-      // Manejar errores específicos
-      if (error.message.includes('ya existe')) {
-        return res.status(409).json({
-          success: false,
-          error: error.message
-        });
-      }
-      
-      res.status(400).json({ 
-        success: false,
-        error: error.message || 'Error al crear autor'
-      });
+      console.error('Error al obtener el autor por id:', error);
+      res.status(500).json({error: 'Error al obtener el autor por id'});
     }
   };
 
   eliminar = async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const {id} = req.params;
+      const autor = await this.service.eliminarAutor(id);
       
-      if (isNaN(id)) {
-        return res.status(400).json({
-          success: false,
-          error: 'ID debe ser un número válido'
-        });
-      }
-      
-      const resultado = await this.service.eliminarAutor(id);
-      
-      if (!resultado) {
-        return res.status(404).json({
-          success: false,
-          error: `Autor con ID ${id} no encontrado`
-        });
-      }
-      
-      res.status(200).json({
-        success: true,
-        message: 'Autor eliminado exitosamente',
-        data: { id: id }
-      });
+      res.json({message:'Autor eliminado exitosamente'});
     } catch (error) {
-      console.error('Error al borrar autor:', error);
-      
-      // Manejar error si tiene libros asociados
-      if (error.message.includes('tiene libros asociados')) {
-        return res.status(409).json({
-          success: false,
-          error: error.message
-        });
-      }
-      
-      res.status(500).json({ 
-        success: false,
-        error: 'Error al eliminar autor'
-      });
+      console.error('Error al eliminar un autor:', error);
+      res.status(400).json({error:'Error al eliminar un autor'})
     }
   };
-
 }

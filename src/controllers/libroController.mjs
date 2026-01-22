@@ -6,7 +6,7 @@ export class LibroController{
         this.service = new LibroService;
     }
 
-    mostrarLibros = async (req, res) => {
+    listar = async (req, res) => {
     try {
       const libros = await this.service.mostrarLibros();
       
@@ -24,7 +24,7 @@ export class LibroController{
     }
   };
 
-  buscarLibro = async (req, res) => {
+  obtener = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
@@ -50,7 +50,7 @@ export class LibroController{
     }
   };
 
-  crearLibro = async (req, res) => {
+  crear = async (req, res) => {
     try {
       const { titulo, autor_id, stock } = req.body;
       
@@ -89,7 +89,7 @@ export class LibroController{
     }
   };
 
-    actualizarLibro = async (req, res) => {
+    actualizar = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { stock } = req.body;

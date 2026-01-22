@@ -6,7 +6,7 @@ export class UsuarioController{
     this.service = new UsuarioService;
   }
 
-  mostrarUsuarios = async (req, res) => {
+  listar = async (req, res) => {
     try {
       const usuarios = await this.service.mostrarUsuarios();
       
@@ -24,7 +24,7 @@ export class UsuarioController{
     }
   };
 
-  buscarUsuario = async (req, res) => {
+  obtener = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
@@ -50,7 +50,7 @@ export class UsuarioController{
     }
   };
 
-  crearUsuario = async (req, res) => {
+  crear = async (req, res) => {
     try {
       const { nombre_completo, email } = req.body;
       
@@ -97,7 +97,7 @@ export class UsuarioController{
     }
   };
 
-actualizarEmail = async (req, res) => {
+actualizar = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { email } = req.body;
@@ -127,7 +127,7 @@ actualizarEmail = async (req, res) => {
     }
   };
 
-  eliminarUsuario = async (req, res) => {
+  eliminar = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
