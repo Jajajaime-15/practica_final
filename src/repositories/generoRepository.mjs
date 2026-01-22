@@ -3,14 +3,20 @@ import { Genero } from "../models/Genero.mjs"
 
 export class GeneroRepository{
     
-    async crear(){
-
+    async crear(dataGenero){
+        const { data, error } = await supabase
+            .from('generos')
+            .insert([dataGenero])
+            .select()
+            .single()
+        if (error) throw error
+        return new Genero(data)
     }
     
     async listar(){
         const { data, error } = await supabase
-        .from('generos')
-        .select('*')
+            .from('generos')
+            .select('*')
 
         if (error) throw error
         return data.map(item => new Genero(item))
@@ -19,15 +25,21 @@ export class GeneroRepository{
 
     async obtener(id){
         const { data, error } = await supabase
-        .from('generos')
-        .select('*')
-        .eq('id', id)
+            .from('generos')
+            .select('*')
+            .eq('id', id)
 
         if (error) throw error
         return data ? new Genero(data) : null
     }
 
-    async eliminar(){
+    async eliminar(id){
+        const { error } = await supabase
+            .from('generos')
+            .delete()
+            .eq('id', id)
 
+        if (error) throw error;
+        return true;
     }
 }
