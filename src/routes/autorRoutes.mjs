@@ -12,8 +12,6 @@ router.get('/', controller.listar)
 
 router.get('/:id', apiKeyMiddleware, controller.obtener)
 
-router.put('/:id', adminMiddleware, controller.actualizar)
-
 router.delete('/:id', adminMiddleware, controller.eliminar)
 
 export default router;
