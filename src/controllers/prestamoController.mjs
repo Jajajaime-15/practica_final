@@ -3,12 +3,12 @@ import { PrestamoService } from '../services/prestamoService.mjs';
 export class PrestamoController{
 
     constructor(prestamoService) {
-        this.service = prestamoService;
+        this.service = new PrestamoService;
     }
 
-    listar = async (req, res) => {
+    mostrarPrestamos = async (req, res) => {
     try {
-      const prestamos = await this.service.listar();
+      const prestamos = await this.service.mostrarPrestamos();
       
       res.status(200).json({
         success: true,
@@ -24,11 +24,11 @@ export class PrestamoController{
     }
   };
 
-  obtener= async (req, res) => {
+  buscarPrestamo= async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
-      const prestamo = await this.service.obtener(id);
+      const prestamo = await this.service.buscarPrestamo(id);
       
       if (!prestamo) {
         return res.status(404).json({
@@ -70,7 +70,7 @@ export class PrestamoController{
       });
     }
   };
-
+  //-----------REVISAR-------
   obtenerPrestamosPorUsuario = async (req, res) => {
     try {
       const usuario_id = parseInt(req.params.usuario_id);
@@ -109,8 +109,8 @@ export class PrestamoController{
       });
     }
   };
-
-  crear = async (req, res) => {
+  //-------------------------------------------------
+  crearPrestamo = async (req, res) => {
     try {
       const { libro_id, usuario_id } = req.body;
       
@@ -129,7 +129,7 @@ export class PrestamoController{
         });
       }
       
-      const nuevoPrestamo = await this.service.crear({
+      const nuevoPrestamo = await this.service.crearPrestamo({
         libro_id,
         usuario_id
       });
@@ -157,6 +157,7 @@ export class PrestamoController{
     }
   };
 
+  //--------REVISAR---------
   devolverPrestamo = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
@@ -191,12 +192,13 @@ export class PrestamoController{
       });
     }
   };
+  //-------------------------------------------------------
 
-  eliminar = async (req, res) => {
+  eliminarPrestamo = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
-      const resultado = await this.service.eliminar(id);
+      const resultado = await this.service.eliminarPrestamo(id);
       
       if (!resultado) {
         return res.status(404).json({
@@ -219,7 +221,7 @@ export class PrestamoController{
     }
   };
 
-  actualizar = async (req, res) => {
+  actualizarEstado = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { estado } = req.body;
@@ -240,7 +242,7 @@ export class PrestamoController{
         });
       }
       
-      const prestamoActualizado = await this.service.actualizar(id, {
+      const prestamoActualizado = await this.service.actualizarEstado(id, {
         estado
       });
       

@@ -3,12 +3,12 @@ import { UsuarioService } from '../services/usuarioService.mjs';
 export class UsuarioController{
 
     constructor(usuarioService) {
-    this.service = usuarioService;
+    this.service = new UsuarioService;
   }
 
-  listar = async (req, res) => {
+  mostrarUsuarios = async (req, res) => {
     try {
-      const usuarios = await this.service.listar();
+      const usuarios = await this.service.mostrarUsuarios();
       
       res.status(200).json({
         success: true,
@@ -24,11 +24,11 @@ export class UsuarioController{
     }
   };
 
-  obtener = async (req, res) => {
+  buscarUsuario = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
-      const usuario = await this.service.obtener(id);
+      const usuario = await this.service.buscarUsuario(id);
       
       if (!usuario) {
         return res.status(404).json({
@@ -50,7 +50,7 @@ export class UsuarioController{
     }
   };
 
-  crear = async (req, res) => {
+  crearUsuario = async (req, res) => {
     try {
       const { nombre_completo, email } = req.body;
       
@@ -97,28 +97,19 @@ export class UsuarioController{
     }
   };
 
-  actualizar = async (req, res) => {
+actualizarEmail = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const { nombre_completo, email } = req.body;
-      
-      const usuarioActualizado = await this.service.actualizar(id, {
-        nombre_completo,
-        email
-      });
-      
-      if (!usuarioActualizado) {
-        return res.status(404).json({
+      const { email } = req.body;
+
+      // Solo permitimos actualizar email
+      if (!email) {
+        return res.status(400).json({
           success: false,
-          error: `Usuario con ID ${id} no encontrado`
+          error: 'El email es requerido'
         });
       }
-      
-      res.status(200).json({
-        success: true,
-        message: 'Usuario actualizado exitosamente',
-        data: usuarioActualizado
-      });
+      const usuarioActualizado = await this.service.actualizarEmail(id, email);
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
       
@@ -136,11 +127,11 @@ export class UsuarioController{
     }
   };
 
-  eliminar = async (req, res) => {
+  eliminarUsuario = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
-      const resultado = await this.service.eliminar(id);
+      const resultado = await this.service.eliminarUsuario(id);
       
       if (!resultado) {
         return res.status(404).json({

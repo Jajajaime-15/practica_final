@@ -8,7 +8,7 @@ export class AutorController{
 
     listar = async (req, res) => {
     try {
-      const autores = await this.service.listar();
+      const autores = await this.service.mostrarAutores();
       
       res.status(200).json({
         success: true,
@@ -35,7 +35,7 @@ export class AutorController{
         });
       }
       
-      const autor = await this.service.obtener(id);
+      const autor = await this.service.buscarAutor(id);
       
       if (!autor) {
         return res.status(404).json({
@@ -69,7 +69,7 @@ export class AutorController{
         });
       }
       
-      const nuevoAutor = await this.service.crear(nombre_completo.trim());
+      const nuevoAutor = await this.service.crearAutor(nombre_completo.trim());
       
       res.status(201).json({
         success: true,
@@ -94,48 +94,6 @@ export class AutorController{
     }
   };
 
-  actualizar = async (req, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      const { nombre_completo } = req.body;
-      
-      if (isNaN(id)) {
-        return res.status(400).json({
-          success: false,
-          error: 'ID debe ser un número válido'
-        });
-      }
-      
-      if (!nombre_completo || nombre_completo.trim() === '') {
-        return res.status(400).json({
-          success: false,
-          error: 'El nombre del autor no puede estar vacio'
-        });
-      }
-      
-      const autorActualizado = await this.service.actualizar(id, nombre_completo.trim());
-      
-      if (!autorActualizado) {
-        return res.status(404).json({
-          success: false,
-          error: `Autor con ID ${id} no encontrado`
-        });
-      }
-      
-      res.status(200).json({
-        success: true,
-        message: 'Autor actualizado exitosamente',
-        data: autorActualizado
-      });
-    } catch (error) {
-      console.error('Error al actualizar autor:', error);
-      res.status(400).json({ 
-        success: false,
-        error: error.message || 'Error al actualizar autor'
-      });
-    }
-  };
-
   eliminar = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
@@ -147,7 +105,7 @@ export class AutorController{
         });
       }
       
-      const resultado = await this.service.borrar(id);
+      const resultado = await this.service.eliminarAutor(id);
       
       if (!resultado) {
         return res.status(404).json({

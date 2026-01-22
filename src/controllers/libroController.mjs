@@ -2,13 +2,13 @@ import { LibroService } from '../services/libroService.mjs';
 
 export class LibroController{
 
-    constructor(libroService) {
-        this.service = libroService;
+    constructor() {
+        this.service = new LibroService;
     }
 
-    listar = async (req, res) => {
+    mostrarLibros = async (req, res) => {
     try {
-      const libros = await this.service.listar();
+      const libros = await this.service.mostrarLibros();
       
       res.status(200).json({
         success: true,
@@ -24,11 +24,11 @@ export class LibroController{
     }
   };
 
-  obtener = async (req, res) => {
+  buscarLibro = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       
-      const libro = await this.service.obtener(id);
+      const libro = await this.service.buscarLibro(id);
       
       if (!libro) {
         return res.status(404).json({
@@ -50,7 +50,7 @@ export class LibroController{
     }
   };
 
-  crear = async (req, res) => {
+  crearLibro = async (req, res) => {
     try {
       const { titulo, autor_id, stock } = req.body;
       
@@ -69,7 +69,7 @@ export class LibroController{
         });
       }
       
-      const nuevoLibro = await this.service.crear({
+      const nuevoLibro = await this.service.crearLibro({
         titulo,
         autor_id,
         stock: stock || 1
@@ -89,29 +89,19 @@ export class LibroController{
     }
   };
 
-  actualizar = async (req, res) => {
+    actualizarLibro = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const { titulo, autor_id, stock } = req.body;
-      
-      const libroActualizado = await this.service.actualizar(id, {
-        titulo,
-        autor_id,
-        stock
-      });
-      
-      if (!libroActualizado) {
-        return res.status(404).json({
+      const { stock } = req.body;
+
+      // Solo permitimos actualizar stock
+      if (stock === undefined) {
+        return res.status(400).json({
           success: false,
-          error: `Libro con ID ${id} no encontrado`
+          error: 'El stock es requerido'
         });
       }
-      
-      res.status(200).json({
-        success: true,
-        message: 'Libro actualizado exitosamente',
-        data: libroActualizado
-      });
+      const libroActualizado = await this.service.actualizarStock(id, stock);
     } catch (error) {
       console.error('Error al actualizar libro:', error);
       res.status(400).json({ 
@@ -125,7 +115,7 @@ export class LibroController{
     try {
       const id = parseInt(req.params.id);
       
-      const resultado = await this.service.eliminar(id);
+      const resultado = await this.service.eliminarLibro(id);
       
       if (!resultado) {
         return res.status(404).json({
