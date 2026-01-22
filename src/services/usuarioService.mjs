@@ -27,11 +27,6 @@ export class UsuarioService{
         if (!emailValido.test(email)) {
             throw new Error('El formato de email no es valido');
         }
-        // comprobar que el email no este en uso ya (lo ponemos pero realmente ya esta en la bbdd como unico)
-        const existeEmail = await this.repository.buscarPorEmail(email);
-        if(existeEmail){
-            throw new Error ('El email ya esta en uso')
-        }
 
         // CREAR
         const usuario = await this.repository.crear({
@@ -86,11 +81,6 @@ export class UsuarioService{
         const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // regex para comprobar que el email sea valido
         if (!emailValido.test(nuevoEmail)) {
             throw new Error('El formato de email no es valido');
-        }
-        // comprobar que el email no este en uso ya (lo ponemos pero realmente ya esta en la bbdd como unico)
-        const existeEmail = await this.repository.buscarPorEmail(nuevoEmail);
-        if(existeEmail){
-            throw new Error ('El email ya esta en uso')
         }
 
         // ACTUALIZAR

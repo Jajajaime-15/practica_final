@@ -27,17 +27,6 @@ export class UsuarioRepository{
         return data ? new Usuario(data) : null; // los datos encontrados los convertimos en objeto Usuario, si no hay datos = 'null'
     }
 
-    // BUSCAR-MOSTRAR UN USUARIO POR EMAIL
-    async buscarPorEmail(email) {
-        const { data, error } = await supabase // peticion 'select' a supabase con condicion (solo queremos un usuario)
-            .from('usuarios')
-            .select('*')
-            .eq('email', email) // condicion: email indicado coincide con un email de la tabla
-            .single();
-
-        if (error) return error;
-        return data ? new Usuario(data) : null; // los datos encontrados los convertimos en objeto Usuario, si no hay datos = 'null'
-    }
     // BUSCAR-MOSTRAR TODOS LOS USUARIOS
     async buscarTodos() {
         const { data, error } = await supabase // peticion 'select' a supabase sin condicion (queremos todos los usuarios)
