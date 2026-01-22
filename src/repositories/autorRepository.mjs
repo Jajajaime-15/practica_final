@@ -5,7 +5,6 @@ import redis from '../config/redis.mjs';
 export class AutorRepository {
 
   constructor() {
-
     this.r = redis;
     this.TTL = 60; // Tiempo de caché en segundos
   }

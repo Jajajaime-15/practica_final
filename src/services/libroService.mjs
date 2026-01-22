@@ -67,21 +67,21 @@ export class LibroService{
     async actualizarStock(id,nuevoStock){
 
         // VALIDACIONES
-        //comprobar que el id es un numero valido
+        // comprobar que el id es un numero valido
         if(!id || isNaN(id)){
             throw new Error ('El id del libro no es valido')
         }
-        //comprobar que el stock no es negativo
-        if(nuevoStock<0){
+        // comprobar que el stock no es negativo
+        if(nuevoStock < 0){
             throw new Error ('El stock no puede estar en negativo')
         }
-        //buscamos que existe el libro con el id indicado
+        // buscamos que existe el libro con el id indicado
         const libro = await this.repository.buscarPorId(id);
         if(!libro){
-            throw new Error ('No se ha encontrado el libro con el id: ',id);
+            throw new Error ('No se ha encontrado el libro con el id: ', id);
         }
 
-        //ACTUALIZAR --- REVISAR
+        //ACTUALIZAR
         return await this.repository.actualizarStock(id, nuevoStock);
     }
 

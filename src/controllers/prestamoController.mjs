@@ -39,7 +39,7 @@ export class PrestamoController {
 
   obtener = async (req, res) => {
     try {
-      const { id } = parseInt(req.params);
+      const { id } = req.params;
       const prestamo = await this.service.buscarPrestamo(id);
 
       res.json({

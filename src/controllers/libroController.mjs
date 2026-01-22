@@ -54,20 +54,17 @@ export class LibroController {
     }
   };
 
-  //-----------REVISAR--------------------
   actualizar = async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const { id } = req.params;
       const { stock } = req.body;
 
-      // Solo permitimos actualizar stock
-      if (stock === undefined) {
-        return res.status(400).json({
-          success: false,
-          error: 'El stock es requerido'
-        });
-      }
       const libroActualizado = await this.service.actualizarStock(id, stock);
+
+      res.status(201).json({
+        message: 'Stock del libro actualizado exitosamente',
+        data: libroActualizado.toJSON()
+      })
     } catch (error) {
       console.error('Error al actualizar libro:', error);
       res.status(400).json({
@@ -76,18 +73,16 @@ export class LibroController {
       });
     }
   };
-  //----------------------------------
 
   eliminar = async (req, res) => {
     try {
       const { id } = req.params;
       const libro = await this.service.eliminarLibro(id);
 
-      res.json({ message: 'Libro eliminado exitosamente' });
+      res.json({ message: 'Libro eliminado exitosamente'});
     } catch (error) {
       console.error('Error al eliminar libro:', error);
       res.status(500).json({ error: 'Error al eliminar un libro' });
     }
   };
-
 }

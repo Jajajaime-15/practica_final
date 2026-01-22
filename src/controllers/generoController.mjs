@@ -14,7 +14,6 @@ export class GeneroController {
                 message: 'Genero creado exitosamente',
                 data: genero.toJSON()
             })
-
         } catch (error) {
             console.error("Error al crear un genero: ", error)
             res.status(400).json({ error: 'Error al crear un genero' })

@@ -105,10 +105,10 @@ export class LibroRepository{
     }
 
     // ACTUALIZAR STOCK DE UN LIBRO
-    async actualizarStock(id,nuevoStock){
-        const {data,error} = await supabase //peticion 'update' a supabase
+    async actualizarStock(id, nuevoStock){
+        const {data,error} = await supabase // peticion 'update' a supabase
             .from('libros')
-            .update({stock:nuevoStock}) //indicamos el campo que actualizamos
+            .update({stock: nuevoStock}) // indicamos el campo que actualizamos
             .eq('id',id)
             .select()
             .single();

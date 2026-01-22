@@ -23,7 +23,7 @@ export class PrestamoRepository{
             .eq('id', id) // condicion: id indicado coincide con un id de la tabla
             .single();
 
-        if (error) return null;
+        if (error) return error;
         return data ? new Prestamo(data) : null; // los datos encontrados los convertimos en objeto Prestamo, si no hay datos = 'null'
     }
 
