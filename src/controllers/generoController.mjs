@@ -12,8 +12,7 @@ export class GeneroController {
 
             res.status(201).json({
                 message: 'Genero creado exitosamente',
-                id: genero.id,
-                nombre: genero.nombre
+                data: genero.toJSON()
             })
 
         }catch(error){
@@ -42,7 +41,7 @@ export class GeneroController {
             const genero = await this.service.buscarGenero(id)
 
             res.json({
-                genero: genero 
+                genero: genero
             })
         }catch(error){
             console.error("Error al obtener el genero por id: ", error)

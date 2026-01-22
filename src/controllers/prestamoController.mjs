@@ -33,13 +33,13 @@ export class PrestamoController {
       });
     } catch (error) {
       console.error('Error al obtener prestamos:', error);
-      res.status(500).json({ error: 'Error al obtener prestamos' });
+      res.status(500).json({ error: 'Error al obtener prestamos'});
     }
   };
 
   obtener = async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const { id } = parseInt(req.params);
       const prestamo = await this.service.buscarPrestamo(id);
 
       res.json({

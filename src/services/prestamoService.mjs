@@ -53,7 +53,6 @@ export class PrestamoService{
 
     //BUSCAR-MOSTRAR PRESTAMO POR ID
     async buscarPrestamo(id){
-
         // VALIDACIONES
         //comprobar que el id es un numero valido
         if(!id || isNaN(id)){

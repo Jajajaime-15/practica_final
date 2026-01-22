@@ -14,7 +14,7 @@ export class GeneroService {
             throw new Error('El nombre del genero tiene que tener minimo 3 caracteres')
         }
 
-        return await this.repository.crear(nombre.trim())
+        return await this.repository.crear({nombre: nombre.trim()})
     }
 
     // mostramos todos los generos
