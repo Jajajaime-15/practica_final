@@ -1,12 +1,12 @@
 import { GeneroService } from "../services/generoService.mjs"
 
 export class GeneroController {
-    constructor(){
+    constructor() {
         this.service = new GeneroService()
     }
 
     crear = async (req, res) => {
-        try{
+        try {
             const { nombre } = req.body
             const genero = await this.service.crearGenero(nombre)
 
@@ -15,42 +15,42 @@ export class GeneroController {
                 data: genero.toJSON()
             })
 
-        }catch(error){
+        } catch (error) {
             console.error("Error al crear un genero: ", error)
-            res.status(400).json({error: 'Error al crear un genero'})
+            res.status(400).json({ error: 'Error al crear un genero' })
         }
     }
 
     listar = async (req, res) => {
-        try{
+        try {
             const generos = await this.service.mostrarGeneros()
 
             res.json({
                 total: generos.length,
-                generos: generos.map(g => g.toJSON()) 
+                generos: generos.map(g => g.toJSON())
             })
-        }catch(error){
+        } catch (error) {
             console.error("Error al listar los generos: ", error)
-            res.status(500).json({error: 'Error al obtener los generos'})
+            res.status(500).json({ error: 'Error al obtener los generos' })
         }
     }
 
     obtener = async (req, res) => {
-        try{
+        try {
             const { id } = req.params
             const genero = await this.service.buscarGenero(id)
 
             res.json({
                 genero: genero
             })
-        }catch(error){
+        } catch (error) {
             console.error("Error al obtener el genero por id: ", error)
-            res.status(500).json({error: 'Error al obtener el genero por id'})
+            res.status(500).json({ error: 'Error al obtener el genero por id' })
         }
     }
 
     eliminar = async (req, res) => {
-        try{
+        try {
             const { id } = req.params
             const genero = await this.service.eliminarGenero(id)
 
@@ -59,9 +59,9 @@ export class GeneroController {
                 data: genero.toJSON()
             })
 
-        }catch(error){
+        } catch (error) {
             console.error("Error al eliminar un genero: ", error)
-            res.status(400).json({error: 'Error al eliminar un genero'})
+            res.status(400).json({ error: 'Error al eliminar un genero' })
         }
     }
 }
