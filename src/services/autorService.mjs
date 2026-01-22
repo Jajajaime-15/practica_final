@@ -1,21 +1,21 @@
 import { AutorRepository } from '../repositories/autorRepository.mjs';
 
-export class AutorService{
-    constructor(){
-        this.repository = new AutorRepository(); 
+export class AutorService {
+    constructor() {
+        this.repository = new AutorRepository();
     }
 
     // CREAR AUTOR NUEVO
-    async crearAutor(nombre_completo){
-        
+    async crearAutor(nombre_completo) {
+
         // VALIDACIONES
         //comprobar que el nombre no esta vacio
-        if(!nombre_completo || nombre_completo.trim() == '' ){
-            throw new Error ('El nombre del autor es obligatorio.')
+        if (!nombre_completo || nombre_completo.trim() == '') {
+            throw new Error('El nombre del autor es obligatorio.')
         }
         //el nombre tiene que tener minimo 3 caracteres
-        if(nombre_completo.trim().length <3){
-            throw new Error ('El nombre del autor tiene que tener minimo 3 caracteres')
+        if (nombre_completo.trim().length < 3) {
+            throw new Error('El nombre del autor tiene que tener minimo 3 caracteres')
         }
 
         //CREAR
@@ -27,41 +27,41 @@ export class AutorService{
     }
 
     // BUSCAR-MOSTRAR UN AUTOR POR ID
-    async buscarAutor(id){
+    async buscarAutor(id) {
 
         // VALIDACIONES
         //comprobar que el id es un numero valido
-        if(!id || isNaN(id)){
-            throw new Error ('El id del autor no es valido')
+        if (!id || isNaN(id)) {
+            throw new Error('El id del autor no es valido')
         }
 
         //BUSCAR - MOSTRAR
         const autor = await this.repository.buscarPorId(id);
-        if(!autor){
-            throw new Error ('No se ha encontrado el autor con el id: ',id);
+        if (!autor) {
+            throw new Error('No se ha encontrado el autor con el id: ', id);
         }
 
         return autor;
     }
 
     // BUSCAR-MOSTRAR TODOS LOS AUTORES
-    async mostrarAutores(){
+    async mostrarAutores() {
         return await this.repository.buscarTodos();
     }
 
     // ELIMINAR AUTOR POR ID
-    async eliminarAutor(id){
+    async eliminarAutor(id) {
 
         // VALIDACIONES
         //comprobar que el id es un numero valido
-        if(!id || isNaN(id)){
-            throw new Error ('El id del autor no es valido')
+        if (!id || isNaN(id)) {
+            throw new Error('El id del autor no es valido')
         }
 
         //buscamos que existe el autor con el id indicado
         const autor = await this.repository.buscarPorId(id);
-        if(!autor){
-            throw new Error ('No se ha encontrado el autor con el id: ',id);
+        if (!autor) {
+            throw new Error('No se ha encontrado el autor con el id: ', id);
         }
 
         // ELIMINAR

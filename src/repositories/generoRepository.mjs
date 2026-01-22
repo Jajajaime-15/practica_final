@@ -1,9 +1,9 @@
 import { supabase } from "../config/database.mjs"
 import { Genero } from "../models/Genero.mjs"
 
-export class GeneroRepository{
-    
-    async crear(dataGenero){
+export class GeneroRepository {
+
+    async crear(dataGenero) {
         const { data, error } = await supabase
             .from('generos')
             .insert([dataGenero])
@@ -12,8 +12,8 @@ export class GeneroRepository{
         if (error) throw error
         return new Genero(data)
     }
-    
-    async listar(){
+
+    async buscarTodos() {
         const { data, error } = await supabase
             .from('generos')
             .select('*')
@@ -23,7 +23,7 @@ export class GeneroRepository{
 
     }
 
-    async obtener(id){
+    async buscarPorId(id) {
         const { data, error } = await supabase
             .from('generos')
             .select('*')
@@ -33,7 +33,7 @@ export class GeneroRepository{
         return data ? new Genero(data) : null
     }
 
-    async eliminar(id){
+    async eliminar(id) {
         const { error } = await supabase
             .from('generos')
             .delete()
