@@ -6,12 +6,10 @@ export class UsuarioService{
     }
 
     // CREAR USUARIO NUEVO
-    async crearUsuario(datosUsuario){
-        const { nombre_completo, email } = datosUsuario;
-
+    async crearUsuario(nombre_completo, email){
         // VALIDACIONES
         // comprobar que el nombre no esta vacio
-        if(!nombre_completo || nombre_completo.trim() == ''){
+        if(!nombre_completo || (nombre_completo.trim() == '')){
             throw new Error ('El nombre del usuario es obligatorio')
         }
         // el nombre tiene que tener minimo 3 caracteres

@@ -1,7 +1,7 @@
 import { UsuarioService } from '../services/usuarioService.mjs';
 
 export class UsuarioController {
-  constructor(usuarioService) {
+  constructor() {
     this.service = new UsuarioService;
   }
 
