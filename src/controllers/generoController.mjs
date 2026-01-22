@@ -57,7 +57,6 @@ export class GeneroController {
                 message: 'Genero eliminado exitosamente',
                 data: genero.toJSON()
             })
-
         } catch (error) {
             console.error("Error al eliminar un genero: ", error)
             res.status(400).json({ error: 'Error al eliminar un genero' })

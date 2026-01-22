@@ -16,7 +16,7 @@ export class UsuarioController {
       });
     } catch (error) {
       console.error('Error al crear usuario:', error);
-      res.status(400).json({ error: 'Error al crear un usuario' });
+      res.status(400).json({error: 'Error al crear un usuario' });
     }
   }
 
@@ -30,7 +30,7 @@ export class UsuarioController {
       });
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
-      res.status(500).json({ error: 'Error al obtener usuarios' });
+      res.status(500).json({error: 'Error al obtener usuarios' });
     }
   };
 
@@ -44,7 +44,7 @@ export class UsuarioController {
       });
     } catch (error) {
       console.error('Error al obtener usuario:', error);
-      res.status(500).json({ error: 'Error al obtener usuario' });
+      res.status(500).json({error: 'Error al obtener usuario' });
     }
   };
 
@@ -52,6 +52,7 @@ export class UsuarioController {
     try {
       const { id } = req.params;
       const { email } = req.body;
+      
       const usuarioActualizado = await this.service.actualizarEmail(id, email);
 
       res.status(201).json({
@@ -60,7 +61,7 @@ export class UsuarioController {
       });
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
-      res.status(400).json({ error: 'Error al actualizar el email del usuario' });
+      res.status(400).json({error: 'Error al actualizar el email del usuario'});
     }
   };
 
@@ -75,7 +76,7 @@ export class UsuarioController {
       });
     } catch (error) {
       console.error('Error al eliminar usuario:', error);
-      return res.status(400).json({ error: 'Error al eliminar un genero' });
+      res.status(400).json({error: 'Error al eliminar un usuario'});
     }
   }
 }

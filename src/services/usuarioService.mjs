@@ -60,7 +60,6 @@ export class UsuarioService{
 
     // ACTUALIZAR EMAIL
     async actualizarEmail(id, nuevoEmail){
-
         // VALIDACIONES
         // comprobar que el id es un numero valido
         if(!id || isNaN(id)){
@@ -80,9 +79,10 @@ export class UsuarioService{
         if (!emailValido.test(nuevoEmail)) {
             throw new Error('El formato de email no es valido');
         }
+        const email = nuevoEmail.trim().toLowerCase()
 
         // ACTUALIZAR
-        return await this.repository.actualizarEmail(id, {email: nuevoEmail.trim().toLowerCase()});
+        return await this.repository.actualizarEmail(id, email);
     }
     
     // ELIMINAR USUARIO POR ID

@@ -43,7 +43,7 @@ export class UsuarioRepository{
         const { data, error } = await supabase // peticion 'update' a supabase
             .from('usuarios')
             .update({email: nuevoEmail}) // indicamos el campo que actualizamos
-            .eq('id',id)
+            .eq('id', id)
             .single();
         
         if (error) throw error;
