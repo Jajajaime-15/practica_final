@@ -151,8 +151,7 @@ export class PrestamoController {
   actualizar = async (req, res) => {
     try {
       const { id } = req.params;
-      const { estado } = req.body;
-      const prestamoActualizado = await this.service.actualizarEstado(id, estado);
+      const prestamoActualizado = await this.service.actualizarEstado(id);
 
       res.status(200).json({
         message: 'Estado del prestamo actualizado exitosamente',

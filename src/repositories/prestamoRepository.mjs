@@ -44,6 +44,7 @@ export class PrestamoRepository{
             .from('prestamos')
             .update({estado: nuevoEstado}) // indicamos el campo que actualizamos
             .eq('id',id)
+            .select()
             .single();
         
         if (error) throw error;

@@ -44,6 +44,7 @@ export class UsuarioRepository{
             .from('usuarios')
             .update({email: nuevoEmail}) // indicamos el campo que actualizamos
             .eq('id', id)
+            .select()
             .single();
         
         if (error) throw error;

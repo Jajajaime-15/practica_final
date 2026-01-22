@@ -73,33 +73,26 @@ export class PrestamoService{
 
     // ACTUALIZAR ESTADO DEL PRESTAMO
     async actualizarEstado(id, nuevoEstado){
-
         // VALIDACIONES
-        //comprobar que el id es un numero valido
+        // comprobar que el id es un numero valido
         if(!id || isNaN(id)){
             throw new Error ('El id del usuario no es valido')
         }
-        //comprobar que tenga un estado
-        if(!nuevoEstado){
-            throw new Error ('El estado del prestamo es obligatorio')
-        }
-        //comprobar que el estado es ACTIVO o DEVUELTO
-        if(nuevoEstado !== 'ACTIVO' && nuevoEstado !== 'DEVUELTO'){
-            throw new Error ('El estado del prestamo no es valido, tiene que ser activo o devuelto')
-        }
-        //buscamos el prestamo
+        // buscamos el prestamo
         const prestamo = await this.repository.buscarPorId(id);
         if(!prestamo){
             throw new Error ('Prestamo no encontrado');
         }
-        //LOGICA DE NEGOCIO -- AUMENTAR STOCK EN 1 SI EL ESTADO CAMBIA A DEVUELTO
-        const libro = await this.libroRepository.buscarPorId(prestamo.libro_id);
-        // pasa a devuelto +1
-        if (prestamo.estado === 'ACTIVO' && nuevoEstado === 'DEVUELTO') {
-            await this.libroRepository.actualizarStock(prestamo.libro_id, libro.stock + 1);
+
+        if(prestamo.estado === 'DEVUELTO'){
+            throw new Error ('El prestamo indicado ya ha sido devuelto')
         }
 
-        return await this.repository.actualizarEstado(id, { nuevoEstado });
+        // aumentamos el stock del libro en 1 ya que el libro ha sido devuelto tras finalizar el prestamo
+        const libro = await this.libroRepository.buscarPorId(prestamo.libro_id);
+        await this.libroRepository.actualizarStock(prestamo.libro_id, libro.stock + 1);
+
+        return await this.repository.actualizarEstado(id, 'DEVUELTO');
     }
 
     // ELIMINAR PRESTAMO POR ID
