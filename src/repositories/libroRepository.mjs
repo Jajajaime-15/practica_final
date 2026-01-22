@@ -52,7 +52,7 @@ export class LibroRepository{
       // Guardamos los datos en cache para proximas consultas
       try {
         if (this.r) {
-          await this.r.setex(key, TTL, JSON.stringify(data));
+          await this.r.set(key, JSON.stringify(data), { EX: this.TTL });
           console.log(' Libros guardados en caché');
         }
       } catch (error) {

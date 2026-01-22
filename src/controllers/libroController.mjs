@@ -3,7 +3,7 @@ import { LibroService } from '../services/libroService.mjs';
 export class LibroController {
 
   constructor() {
-    this.service = new LibroService;
+    this.service = new LibroService();
   }
 
   crear = async (req, res) => {

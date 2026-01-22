@@ -10,4 +10,9 @@ redis.on('connect', () => {
   console.log('Conectado a Redis');
 });
 
-export default redis;
+
+await redisClient.connect();
+
+
+
+

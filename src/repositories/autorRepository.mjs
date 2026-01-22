@@ -52,7 +52,7 @@ export class AutorRepository {
       // Guardamos los datos en cache para proximas consultas
       try {
         if (this.r) {
-          await this.r.setex(key, this.TTL, JSON.stringify(data));
+          await this.r.set(key, JSON.stringify(data) , { EX: this.TTL });
           console.log(' Autores guardados en caché');
         }
       } catch (error) {
