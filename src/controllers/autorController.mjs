@@ -1,7 +1,7 @@
 import { AutorService } from '../services/autorService.mjs';
 
-export class AutorController{
-  
+export class AutorController {
+
   constructor() {
     this.service = new AutorService();
   }
@@ -16,13 +16,13 @@ export class AutorController{
         id: autor.id,
         nombre_completo: autor.nombre_completo
       });
-    
+
     } catch (error) {
       console.error('Error al crear autor:', error);
-      res.status(400).json({error: 'Error al crear un autor'});
+      res.status(400).json({ error: 'Error al crear un autor' });
     }
   };
-  
+
   listar = async (req, res) => {
     try {
       const autores = await this.service.mostrarAutores();
@@ -31,34 +31,34 @@ export class AutorController{
         total: autores.length,
         autores: autores.map(a => a.toPublic())
       });
-      
+
     } catch (error) {
       console.error('Error al obtener autores:', error);
-      res.status(500).json({error: 'Error al obtener autores'});
+      res.status(500).json({ error: 'Error al obtener autores' });
     }
   };
 
   obtener = async (req, res) => {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
       const autor = await this.service.buscarAutor(id);
 
-      res.json(autor.toPublic());
+      res.json({ autor: autor });
     } catch (error) {
       console.error('Error al obtener el autor por id:', error);
-      res.status(500).json({error: 'Error al obtener el autor por id'});
+      res.status(500).json({ error: 'Error al obtener el autor por id' });
     }
   };
 
   eliminar = async (req, res) => {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
       const autor = await this.service.eliminarAutor(id);
-      
-      res.json({message:'Autor eliminado exitosamente'});
+
+      res.json({ message: 'Autor eliminado exitosamente' });
     } catch (error) {
       console.error('Error al eliminar un autor:', error);
-      res.status(400).json({error:'Error al eliminar un autor'})
+      res.status(400).json({ error: 'Error al eliminar un autor' })
     }
   };
 }

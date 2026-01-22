@@ -39,7 +39,7 @@ export class GeneroController {
     obtener = async (req, res) => {
         try{
             const { id } = req.params
-            const genero = await this.service.obtener(id)
+            const genero = await this.service.buscarGenero(id)
 
             res.json({
                 genero: genero 

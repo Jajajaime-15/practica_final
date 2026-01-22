@@ -1,95 +1,61 @@
 import { LibroService } from '../services/libroService.mjs';
 
-export class LibroController{
+export class LibroController {
 
-    constructor() {
-        this.service = new LibroService;
+  constructor() {
+    this.service = new LibroService;
+  }
+
+  crear = async (req, res) => {
+    try {
+      const { titulo, autor_id, stock } = req.body;
+      const libro = await this.service.crearLibro({
+        titulo,
+        autor_id,
+        stock: stock || 1
+      });
+
+      res.status(201).json({
+        message: 'Libro creado exitosamente',
+        id: libro.id,
+        titulo: libro.titulo
+      });
+    } catch (error) {
+      console.error('Error al crear libro:', error);
+      res.status(400).json({ error: 'Error al crear un libro' });
     }
+  };
 
-    listar = async (req, res) => {
+  listar = async (req, res) => {
     try {
       const libros = await this.service.mostrarLibros();
-      
-      res.status(200).json({
-        success: true,
-        count: libros.length,
-        data: libros
+
+      res.json({
+        total: libros.length,
+        libros: libros.map(l => l.toJSON())
       });
     } catch (error) {
       console.error('Error al obtener libros:', error);
-      res.status(500).json({ 
-        success: false,
-        error: 'Error al obtener libros'
-      });
+      res.status(500).json({ error: 'Error al obtener libros' });
     }
   };
 
   obtener = async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      
+      const { id } = req.params;
       const libro = await this.service.buscarLibro(id);
-      
-      if (!libro) {
-        return res.status(404).json({
-          success: false,
-          error: `Libro con ID ${id} no encontrado`
-        });
-      }
-      
-      res.status(200).json({
-        success: true,
-        data: libro
+
+      res.json({
+        libro: libro
       });
     } catch (error) {
       console.error('Error al obtener libro:', error);
-      res.status(500).json({ 
-        success: false,
-        error: 'Error al obtener libro'
-      });
+      res.status(500).json({ error: 'Error al obtener el libro por id' });
     }
   };
 
-  crear = async (req, res) => {
-    try {
-      const { titulo, autor_id, stock } = req.body;
-      
-      // Validación muy básica
-      if (!titulo) {
-        return res.status(400).json({
-          success: false,
-          error: 'El título es necesario'
-        });
-      }
-      
-      if (!autor_id) {
-        return res.status(400).json({
-          success: false,
-          error: 'El autor es necesario'
-        });
-      }
-      
-      const nuevoLibro = await this.service.crearLibro({
-        titulo,
-        autor_id,
-        stock: stock || 1
-      });
-      
-      res.status(201).json({
-        success: true,
-        message: 'Libro creado exitosamente',
-        data: nuevoLibro
-      });
-    } catch (error) {
-      console.error('Error al crear libro:', error);
-      res.status(400).json({ 
-        success: false,
-        error: error.message || 'Error al crear libro'
-      });
-    }
-  };
-
-    actualizar = async (req, res) => {
+  //-----------REVISAR--------------------
+  actualizar = async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { stock } = req.body;
@@ -104,37 +70,23 @@ export class LibroController{
       const libroActualizado = await this.service.actualizarStock(id, stock);
     } catch (error) {
       console.error('Error al actualizar libro:', error);
-      res.status(400).json({ 
+      res.status(400).json({
         success: false,
         error: error.message || 'Error al actualizar libro'
       });
     }
   };
+  //----------------------------------
 
-  eliminar= async (req, res) => {
+  eliminar = async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
-      
-      const resultado = await this.service.eliminarLibro(id);
-      
-      if (!resultado) {
-        return res.status(404).json({
-          success: false,
-          error: `Libro con ID ${id} no encontrado`
-        });
-      }
-      
-      res.status(200).json({
-        success: true,
-        message: 'Libro eliminado exitosamente',
-        data: { id: id }
-      });
+      const { id } = req.params;
+      const libro = await this.service.eliminarLibro(id);
+
+      res.json({ message: 'Libro eliminado exitosamente' });
     } catch (error) {
       console.error('Error al eliminar libro:', error);
-      res.status(500).json({ 
-        success: false,
-        error: 'Error al eliminar libro'
-      });
+      res.status(500).json({ error: 'Error al eliminar un libro' });
     }
   };
 
