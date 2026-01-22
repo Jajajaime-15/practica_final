@@ -48,7 +48,6 @@ router.get('/', (req, res) => {
         'POST /api/autores - Crear un nuevo autor (requiere ser admin)',
         'GET /api/autores - Obtener una lista completa de todos los autores de la base de datos',
         'GET /api/autores/:id - Obtener un autor concreto de la base de datos mediante su id (requiere API Key)',
-        'PUT /api/autores/:id - Actualizar un autor en la base de datos (requiere ser admin)',
         'DELETE /api/autores/:id - Eliminar un autor de la base de datos (requiere ser admin)'
       ],
       usuarios: [

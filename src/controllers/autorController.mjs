@@ -41,8 +41,8 @@ export class AutorController {
       const { id } = req.params;
       const autor = await this.service.buscarAutor(id);
 
-      res.json({ 
-        autor: autor 
+      res.json({
+        autor: autor
       });
     } catch (error) {
       console.error('Error al obtener el autor por id:', error);
@@ -55,9 +55,9 @@ export class AutorController {
       const { id } = req.params;
       const autor = await this.service.eliminarAutor(id);
 
-      res.json({ 
+      res.json({
         message: 'Autor eliminado exitosamente',
-        data:autor.toJSON()
+        data: autor.toJSON()
       });
     } catch (error) {
       console.error('Error al eliminar un autor:', error);

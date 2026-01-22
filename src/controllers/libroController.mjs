@@ -80,7 +80,7 @@ export class LibroController {
       });
     } catch (error) {
       console.error('Error al eliminar libro:', error);
-      res.status(500).json({ error: 'Error al eliminar un libro' });
+      res.status(400).json({ error: 'Error al eliminar un libro' });
     }
   };
 }

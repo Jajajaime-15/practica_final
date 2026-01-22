@@ -65,6 +65,7 @@ export class AutorService {
         }
 
         // ELIMINAR
-        return await this.repository.eliminar(id);
+        await this.repository.eliminar(id);
+        return autor;
     }
 }

@@ -101,6 +101,7 @@ export class LibroService {
         }
 
         // ELIMINAR
-        return await this.repository.eliminar(id);
+        await this.repository.eliminar(id);
+        return libro;
     }
 }
