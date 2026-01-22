@@ -8,6 +8,6 @@ const controller = new EstadisticasController();
 
 router.get('/top_autores', controller.topAutores) // primera consulta avanzada
 
-router.get('/', controller) // segunda consulta avanzada
+//router.get('/', controller) // segunda consulta avanzada
 
 export default router;

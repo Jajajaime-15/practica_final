@@ -8,7 +8,7 @@ export class GeneroController {
     crear = async (req, res) => {
         try{
             const { nombre } = req.body
-            const genero = await this.service.crear(nombre)
+            const genero = await this.service.crearGenero(nombre)
 
             res.status(201).json({
                 message: 'Genero creado exitosamente',
@@ -24,7 +24,7 @@ export class GeneroController {
 
     listar = async (req, res) => {
         try{
-            const generos = await this.service.listar()
+            const generos = await this.service.mostrarGeneros()
 
             res.json({
                 total: generos.length,
@@ -53,7 +53,7 @@ export class GeneroController {
     eliminar = async (req, res) => {
         try{
             const { id } = req.params
-            const genero = await this.service.eliminar(id)
+            const genero = await this.service.eliminarGenero(id)
 
             res.json({
                 message: 'Genero eliminado exitosamente',

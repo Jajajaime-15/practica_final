@@ -5,6 +5,7 @@ import libroRoutes from './libroRoutes.mjs';
 import prestamoRoutes from './prestamoRoutes.mjs';
 import usuarioRoutes from './usuarioRoutes.mjs';
 import generoRoutes from './generoRoutes.mjs';
+import estadisticasRoutes from './estadisticasRoutes.mjs';
 
 const router = express.Router();
 

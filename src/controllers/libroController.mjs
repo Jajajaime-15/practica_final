@@ -35,8 +35,8 @@ export class LibroController {
         libros: libros.map(l => l.toJSON())
       });
     } catch (error) {
-      console.error('Error al obtener libros:', error);
-      res.status(500).json({ error: 'Error al obtener libros' });
+      console.error('Error al listar libros:', error);
+      res.status(500).json({ error: 'Error al listar libros'});
     }
   };
 

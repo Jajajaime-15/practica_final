@@ -29,7 +29,7 @@ export class AutorController {
 
       res.json({
         total: autores.length,
-        autores: autores.map(a => a.toPublic())
+        autores: autores.map(a => a.toJSON())
       });
 
     } catch (error) {

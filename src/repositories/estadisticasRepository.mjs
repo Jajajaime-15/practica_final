@@ -2,7 +2,7 @@ import { supabase } from '../config/database.mjs';
 import { Prestamo } from '../models/Prestamo.mjs';
 import redis from '../config/redis.mjs';
 
-export class PrestamoRepository {
+export class EstadisticasRepository {
   constructor() {
     this.redis = redis;
     this.ttl = 60;

@@ -2,10 +2,7 @@ import { supabase } from '../config/database.mjs';
 import { Libro } from '../models/Libro.mjs';
 import redis from '../config/redis.mjs';
 
-
 export class LibroRepository{
-
-
     constructor() {
     
     this.r = redis;
@@ -32,7 +29,7 @@ export class LibroRepository{
     }
     
     // Si no está en cache asi que buscamos en la base de datos
-    console.log('Libros no encnontrados en cache, consultando base de datos');
+    console.log('Libros no encontrados en cache, consultando base de datos');
     
     try {
       const { data, error } = await supabase
@@ -88,19 +85,19 @@ export class LibroRepository{
     async buscarPorId(id) {
         const { data, error } = await supabase //peticion 'select' a supabase con condicion (solo queremos un libro)
             .from('libros')
-            .select('*', autores (nombre_completo)) //join con la tabla de autores para coger el nombre del autor del libro
+            .select('*') 
             .eq('id', id) //condicion: id indicado coincide con un id de la tabla
             .single();
 
         if (error) return null;
-        return data ? new Libro(data) : null; //los datos encontrados los convertimos en objeto Libro, si no hay datos = 'null'
+        return data ? new Libro(data) : null; // los datos encontrados los convertimos en objeto Libro, si no hay datos = 'null'
     }
 
     // BUSCAR-MOSTRAR TODOS LOS LIBROS
     async buscarTodos() {
         const { data, error } = await supabase //peticion 'select' a supabase sin condicion (queremos todos los libros)
             .from('libros')
-            .select('*', autores (nombre_completo))
+            .select('*')
             .order('titulo', { ascending: true }); //los libros los mostramos ordenados alfabeticamente
 
         if (error) throw error;
@@ -130,6 +127,4 @@ export class LibroRepository{
         if (error) throw error;
         return true;
     }
-
-    
 }
