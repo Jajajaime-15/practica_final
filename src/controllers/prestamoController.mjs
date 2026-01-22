@@ -15,7 +15,8 @@ export class PrestamoController {
       });
 
       res.status(201).json({
-        message: 'Prestamo creado exitosamente'
+        message: 'Prestamo creado exitosamente',
+        data: prestamo.toJSON()
       });
     } catch (error) {
       console.error('Error al crear prestamo:', error);
@@ -29,11 +30,11 @@ export class PrestamoController {
 
       res.json({
         total: prestamos.length,
-        prestamos: prestamos.map(p => p.toJSON()) //NO LO RECONOCE
+        prestamos: prestamos.map(p => p.toJSON())
       });
     } catch (error) {
       console.error('Error al obtener prestamos:', error);
-      res.status(500).json({ error: 'Error al obtener prestamos'});
+      res.status(500).json({ error: 'Error al obtener prestamos' });
     }
   };
 
@@ -149,56 +150,28 @@ export class PrestamoController {
 
   actualizar = async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const { id } = req.params;
       const { estado } = req.body;
-
-
-      if (!estado) {
-        return res.status(400).json({
-          success: false,
-          error: 'El estado es requerido'
-        });
-      }
-
-      // Validar que el estado sea correcto
-      if (estado !== 'ACTIVO' && estado !== 'DEVUELTO') {
-        return res.status(400).json({
-          success: false,
-          error: 'El estado debe ser "ACTIVO" o "DEVUELTO"'
-        });
-      }
-
-      const prestamoActualizado = await this.service.actualizarEstado(id, {
-        estado
-      });
-
-      if (!prestamoActualizado) {
-        return res.status(404).json({
-          success: false,
-          error: `Préstamo con ID ${id} no encontrado`
-        });
-      }
+      const prestamoActualizado = await this.service.actualizarEstado(id, estado);
 
       res.status(200).json({
-        success: true,
-        message: 'Préstamo actualizado exitosamente',
-        data: prestamoActualizado
+        message: 'Estado del prestamo actualizado exitosamente',
+        data: prestamoActualizado.toJSON()
       });
     } catch (error) {
-      console.error('Error al actualizar préstamo:', error);
-      res.status(400).json({
-        success: false,
-        error: error.message || 'Error al actualizar préstamo'
-      });
+      console.error('Error al actualizar prestamo:', error);
+      res.status(400).json({ error: 'Error al actualizar prestamo' });
     }
   };
-  //-------------------------------------------------------
 
   eliminar = async (req, res) => {
     try {
       const { id } = req.params;
       const prestamo = await this.service.eliminarPrestamo(id);
-      res.status(200).json({ message: 'Prestamo eliminado exitosamente' });
+      res.status(200).json({ 
+        message: 'Prestamo eliminado exitosamente',
+        data: prestamo.toJSON()
+      });
     } catch (error) {
       console.error('Error al eliminar prestamo:', error);
       res.status(500).json({ error: 'Error al eliminar el prestamo' });

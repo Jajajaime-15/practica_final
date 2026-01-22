@@ -17,8 +17,7 @@ export class LibroController {
 
       res.status(201).json({
         message: 'Libro creado exitosamente',
-        id: libro.id,
-        titulo: libro.titulo
+        data: libro.toJSON()
       });
     } catch (error) {
       console.error('Error al crear libro:', error);
@@ -36,7 +35,7 @@ export class LibroController {
       });
     } catch (error) {
       console.error('Error al listar libros:', error);
-      res.status(500).json({ error: 'Error al listar libros'});
+      res.status(500).json({ error: 'Error al listar libros' });
     }
   };
 
@@ -58,7 +57,6 @@ export class LibroController {
     try {
       const { id } = req.params;
       const { stock } = req.body;
-
       const libroActualizado = await this.service.actualizarStock(id, stock);
 
       res.status(201).json({
@@ -67,10 +65,7 @@ export class LibroController {
       })
     } catch (error) {
       console.error('Error al actualizar libro:', error);
-      res.status(400).json({
-        success: false,
-        error: error.message || 'Error al actualizar libro'
-      });
+      res.status(400).json({ error: 'Error al actualizar libro' });
     }
   };
 
@@ -79,7 +74,10 @@ export class LibroController {
       const { id } = req.params;
       const libro = await this.service.eliminarLibro(id);
 
-      res.json({ message: 'Libro eliminado exitosamente'});
+      res.json({
+        message: 'Libro eliminado exitosamente',
+        data: libro.toJSON()
+      });
     } catch (error) {
       console.error('Error al eliminar libro:', error);
       res.status(500).json({ error: 'Error al eliminar un libro' });

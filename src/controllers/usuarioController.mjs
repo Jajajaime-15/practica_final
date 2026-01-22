@@ -50,31 +50,17 @@ export class UsuarioController {
 
   actualizar = async (req, res) => {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
       const { email } = req.body;
-
-      // Solo permitimos actualizar email
-      if (!email) {
-        return res.status(400).json({
-          success: false,
-          error: 'El email es requerido'
-        });
-      }
       const usuarioActualizado = await this.service.actualizarEmail(id, email);
+
+      res.status(201).json({
+        message: 'Email del usuario actualizado exitosamente',
+        data: usuarioActualizado.toJSON()
+      });
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
-
-      if (error.message.includes('duplicate key') || error.message.includes('ya existe')) {
-        return res.status(409).json({
-          success: false,
-          error: 'El email ya está registrado por otro usuario'
-        });
-      }
-
-      res.status(400).json({
-        success: false,
-        error: error.message || 'Error al actualizar usuario'
-      });
+      res.status(400).json({ error: 'Error al actualizar el email del usuario' });
     }
   };
 
@@ -89,7 +75,7 @@ export class UsuarioController {
       });
     } catch (error) {
       console.error('Error al eliminar usuario:', error);
-      return res.status(409).json({ error: 'Error al eliminar un genero' });
+      return res.status(400).json({ error: 'Error al eliminar un genero' });
     }
   }
 }
