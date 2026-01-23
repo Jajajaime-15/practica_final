@@ -5,22 +5,31 @@ export class EstadisticasController{
         this.service = new EstadisticasService();
     }
 
-    /**
-   * GET /api/admin/keys
-   * Lista todas las API Keys registradas
-   */
-    topAutores = async (req, res) => {
+    librosConGeneros = async (req, res) => {
         try {
-        const autores = await this.service.topAutores();
+            const libros = await this.service.obtenerLibrosConGeneros();
 
-        res.json({
-            total: autores.length,
-            keys: keautoresys.map(k => k.toJSON())
-        });
+            res.json({
+                total: libros.length,
+                data: libros
+            });
         } catch (error) {
-        console.error('Error en getAllKeys:', error);
-        res.status(500).json({ error: 'Error al obtener las API Keys' });
+            console.error('Error al obtener el top de autores:', error);
+            res.status(500).json({ error: 'Error al obtener el top de autores' });
         }
     };
 
+    prestamosActivos = async (req, res) => {
+        try {
+            const prestamos = await this.service.obtenerPrestamosActivos();
+
+            res.json({
+                total: prestamos.length,
+                prestamos: prestamos
+            });
+        } catch (error) {
+            console.error('Error al obtener los prestamos activos:', error);
+            res.status(500).json({ error: 'Error al obtener los prestamos activos' });
+        }
+    };
 }

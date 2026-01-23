@@ -39,14 +39,14 @@ router.get('/', (req, res) => {
       ],
       libros: [
         'POST /api/libros - Crear un nuevo libro (requiere ser admin)',
-        'GET /api/libros - Obtener una lista completa de todos los libros de la biblioteca',
+        'GET /api/libros - Obtener una lista completa de todos los libros de la biblioteca (es publica, se le aplica cache debido a la alta frecuencia de consultas)',
         'GET /api/libros/:id - Obtener un libro concreto de la base de datos mediante su id (requiere API Key)',
         'PUT /api/libros/:id - Actualizar un libro en la base de datos (requiere ser admin)',
         'DELETE /api/libros/:id - Eliminar un libro de la base de datos (requiere ser admin)'
       ],
       autores: [
         'POST /api/autores - Crear un nuevo autor (requiere ser admin)',
-        'GET /api/autores - Obtener una lista completa de todos los autores de la base de datos',
+        'GET /api/autores - Obtener una lista completa de todos los autores de la base de datos (es publica, se le aplica cache debido a la alta frecuencia de consultas)',
         'GET /api/autores/:id - Obtener un autor concreto de la base de datos mediante su id (requiere API Key)',
         'DELETE /api/autores/:id - Eliminar un autor de la base de datos (requiere ser admin)'
       ],
@@ -71,8 +71,8 @@ router.get('/', (req, res) => {
         'DELETE /api/generos/:id - Eliminar un genero de la base de datos (requiere ser admin)'
       ],
       estadisticas: [
-        'GET /api/estadisticas/ - Primera consulta avanzada - (requiere API Key)',
-        'GET /api/estadisticas - Segunda consulta avanzada - (requiere API Key)',
+        'GET /api/estadisticas/prestamos-activos - Primera consulta avanzada - Obtener los prestamos activos (requiere API Key)',
+        'GET /api/estadisticas/libros-generos - Segunda consulta avanzada - Obtener la relacion de los libros con sus generos (requiere API Key)',
       ]
     },
     usage: {

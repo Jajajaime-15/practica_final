@@ -1,19 +1,20 @@
 import express from 'express';
 import { PrestamoController } from '../controllers/prestamoController.mjs';
-import { apiKeyMiddleware } from '../middlewares/apiKeyMiddleware.mjs';
 import { adminMiddleware } from '../middlewares/adminMiddleware.mjs';
 
 const router = express.Router();
 const controller = new PrestamoController();
 
-router.post('/', adminMiddleware, controller.crear)
+router.use(adminMiddleware) // al aplicarse a todos el middleware se puede disponer por encima de ellos y asi funcionara adecuadamente
 
-router.get('/', adminMiddleware, controller.listar)
+router.post('/', controller.crear)
 
-router.get('/:id', adminMiddleware, controller.obtener)
+router.get('/', controller.listar)
 
-router.put('/:id', adminMiddleware, controller.actualizar)
+router.get('/:id', controller.obtener)
 
-router.delete('/:id', adminMiddleware, controller.eliminar)
+router.put('/:id', controller.actualizar)
+
+router.delete('/:id', controller.eliminar)
 
 export default router;
