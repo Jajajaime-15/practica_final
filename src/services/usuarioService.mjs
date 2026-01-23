@@ -1,4 +1,5 @@
 import { UsuarioRepository } from '../repositories/usuarioRepository.mjs';
+import { validarEmail } from '../utils/validators.mjs';
 
 export class UsuarioService {
     constructor() {
@@ -20,9 +21,8 @@ export class UsuarioService {
         if (!email || email.trim() == '') {
             throw new Error('El email es obligatorio')
         }
-        // formato de email valido
-        const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // regex para comprobar que el email sea valido
-        if (!emailValido.test(email)) {
+        // comprobamos que el email sea valido haciendo uso de la utilidad de validacion del email
+        if (!validarEmail(email)) {
             throw new Error('El formato de email no es valido');
         }
 
@@ -74,9 +74,8 @@ export class UsuarioService {
         if (!nuevoEmail || nuevoEmail.trim() == '') {
             throw new Error('El email es obligatorio')
         }
-        // formato de email valido
-        const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // regex para comprobar que el email sea valido
-        if (!emailValido.test(nuevoEmail)) {
+        // comprobamos que el email sea valido haciendo uso de la utilidad de validacion del email
+        if (!validarEmail(nuevoEmail)) {
             throw new Error('El formato de email no es valido');
         }
         const email = nuevoEmail.trim().toLowerCase()
