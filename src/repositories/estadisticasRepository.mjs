@@ -1,6 +1,4 @@
 import { supabase } from '../config/database.mjs';
-import { Prestamo } from '../models/Prestamo.mjs';
-import redis from '../config/redis.mjs';
 
 export class EstadisticasRepository {
 
