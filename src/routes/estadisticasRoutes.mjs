@@ -1,11 +1,11 @@
 import express from 'express';
 import { EstadisticasController } from '../controllers/estadisticasController.mjs';
-import { apiKeyMiddleware } from '../middlewares/apiKeyMiddleware.mjs';
+import { adminMiddleware } from '../middlewares/adminMiddleware.mjs'
 
 const router = express.Router();
 const controller = new EstadisticasController();
 
-router.use(apiKeyMiddleware) // al aplicarse a todos el middleware se puede disponer por encima de ellos y asi funcionara adecuadamente
+router.use(adminMiddleware) // al aplicarse a todos el middleware se puede disponer por encima de ellos y asi funcionara adecuadamente
 
 router.get('/libros-generos', controller.librosConGeneros) // primera consulta avanzada
 
