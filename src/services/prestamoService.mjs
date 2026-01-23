@@ -11,7 +11,7 @@ export class PrestamoService{
 
     //CREAR PRESTAMO NUEVO
     async crearPrestamo(datosPrestamo){
-        const { libro_id, usuario_id, fecha_prestamo } = datosPrestamo;
+        const { libro_id, usuario_id } = datosPrestamo;
 
         // VALIDACIONES
         // comprobar que tiene un id de libro
@@ -72,7 +72,7 @@ export class PrestamoService{
     }
 
     // ACTUALIZAR ESTADO DEL PRESTAMO
-    async actualizarEstado(id, nuevoEstado){
+    async actualizarEstado(id){
         // VALIDACIONES
         // comprobar que el id es un numero valido
         if(!id || isNaN(id)){
