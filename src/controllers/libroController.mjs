@@ -8,11 +8,12 @@ export class LibroController {
 
   crear = async (req, res) => {
     try {
-      const { titulo, autor_id, stock } = req.body;
+      const { titulo, autor_id, generos, stock } = req.body;
       const libro = await this.service.crearLibro({
         titulo,
         autor_id,
-        stock: stock || 1
+        generos: generos, // los generos que se asignaran en la tabla intermedia, se introducen como un array
+        stock: stock || 1 // ofrecemos la posibilidad de establecer stock, aunque en la bbdd ya se tiene en cuenta que por defecto sea 1
       });
 
       res.status(201).json({

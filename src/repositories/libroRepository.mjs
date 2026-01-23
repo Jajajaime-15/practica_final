@@ -29,6 +29,20 @@ export class LibroRepository{
     return new Libro(data); //convertimos los datos en un objeto Libro y lo devolvemos
   }
 
+  async asignarGeneros(libroId, generos){
+    const datos = generos.map(genero => ({
+      libro_id: libroId,
+      genero_id: genero
+    }))
+
+    const { error } = await supabase
+      .from('libros_generos')
+      .insert(datos)
+
+    if (error) throw error
+    return true
+  }
+
   // BUSCAR-MOSTRAR UN LIBRO POR ID
   async buscarPorId(id) {
     const { data, error } = await supabase //peticion 'select' a supabase con condicion (solo queremos un libro)
